@@ -8,14 +8,21 @@ namespace ImageNexus
 {
     internal class LazyImageLoader : IImageLoader
     {
-        private Dictionary<string, Image?> _images = new Dictionary<string, Image?>();
+        protected Dictionary<string, Image?> _images = new Dictionary<string, Image?>();
+
+        public LazyImageLoader() { }
+
+        public LazyImageLoader(List<string> imagePaths) 
+        {
+            SetImages(imagePaths);
+        }
 
         public void SetImages(List<string> imagePaths)
         {
             imagePaths.ForEach(path => _images.Add(path, null));
         }
 
-        public Image LoadImage(string filePath)
+        public virtual Image LoadImage(string filePath)
         {
             if (_images[filePath] == null)
                 _images[filePath] = Image.FromFile(filePath);
