@@ -11,6 +11,19 @@ namespace ImageNexus
         private string? folderPath;
         private List<string>? images;
 
+        public ImageBrowser() 
+        {
+            using (var fbd = new FolderBrowserDialog())
+            {
+                DialogResult result = fbd.ShowDialog();
+
+                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
+                {
+                    SetFolderLocation(fbd.SelectedPath);
+                }
+            }
+        }
+
         public void SetFolderLocation(string folderPath)
         {
             this.folderPath = folderPath;
@@ -34,8 +47,22 @@ namespace ImageNexus
                 return;
 
             images = new List<string>();
-            string[] imageFiles = Directory.GetFiles(folderPath, "*.jpg|*.jpeg|*.png|*.gif|*.bmp", SearchOption.TopDirectoryOnly);
+            var filters = new string[] { "jpg", "jpeg", "png", "gif", "bmp" };
+            var imageFiles = GetFilesFrom(folderPath, filters, false);
             images.AddRange(imageFiles);
+        }
+
+        private static List<string> GetFilesFrom(string searchFolder, string[] filters, bool isRecursive)
+        {
+            List<string> filesFound = new List<string>();
+            var searchOption = isRecursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
+
+            foreach (var filter in filters)
+            {
+                filesFound.AddRange(Directory.GetFiles(searchFolder, string.Format("*.{0}", filter), searchOption));
+            }
+
+            return filesFound.ToList();
         }
     }
 }

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ImageNexus
 {
-    internal interface IImageLoader
+    public interface IImageLoader
     {
         public void SetImages(List<string> imagePaths);
-        public Image LoadImage(string filePath);
+        public Image? LoadImage(string filePath);
     }
 }

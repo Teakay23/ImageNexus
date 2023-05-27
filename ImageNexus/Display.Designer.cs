@@ -28,12 +28,141 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "Form1";
+            mainFormPanel = new Panel();
+            tableLayoutPanel1 = new TableLayoutPanel();
+            tableLayoutPanel2 = new TableLayoutPanel();
+            previousButton = new ReaLTaiizor.Controls.SocialButton();
+            nextButton = new ReaLTaiizor.Controls.SocialButton();
+            mainPictureBox = new ReaLTaiizor.Controls.HopePictureBox();
+            thumbnailPanel = new Panel();
+            mainFormPanel.SuspendLayout();
+            tableLayoutPanel1.SuspendLayout();
+            tableLayoutPanel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)mainPictureBox).BeginInit();
+            SuspendLayout();
+            // 
+            // mainFormPanel
+            // 
+            mainFormPanel.BackColor = Color.Black;
+            mainFormPanel.Controls.Add(tableLayoutPanel1);
+            mainFormPanel.Dock = DockStyle.Fill;
+            mainFormPanel.Location = new Point(0, 0);
+            mainFormPanel.Name = "mainFormPanel";
+            mainFormPanel.Size = new Size(800, 529);
+            mainFormPanel.TabIndex = 9;
+            // 
+            // tableLayoutPanel1
+            // 
+            tableLayoutPanel1.BackColor = Color.Transparent;
+            tableLayoutPanel1.ColumnCount = 1;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel2, 0, 0);
+            tableLayoutPanel1.Controls.Add(thumbnailPanel, 0, 1);
+            tableLayoutPanel1.Dock = DockStyle.Fill;
+            tableLayoutPanel1.Location = new Point(0, 0);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 2;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 75F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
+            tableLayoutPanel1.Size = new Size(800, 529);
+            tableLayoutPanel1.TabIndex = 0;
+            // 
+            // tableLayoutPanel2
+            // 
+            tableLayoutPanel2.ColumnCount = 3;
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 7.5F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 85F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 7.5F));
+            tableLayoutPanel2.Controls.Add(previousButton, 0, 0);
+            tableLayoutPanel2.Controls.Add(nextButton, 2, 0);
+            tableLayoutPanel2.Controls.Add(mainPictureBox, 1, 0);
+            tableLayoutPanel2.Dock = DockStyle.Fill;
+            tableLayoutPanel2.Location = new Point(3, 3);
+            tableLayoutPanel2.Name = "tableLayoutPanel2";
+            tableLayoutPanel2.RowCount = 1;
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel2.Size = new Size(794, 390);
+            tableLayoutPanel2.TabIndex = 0;
+            // 
+            // previousButton
+            // 
+            previousButton.Anchor = AnchorStyles.Left;
+            previousButton.BackgroundImage = Properties.Resources.arrow_symbol_opposite;
+            previousButton.DownEllipseColor = Color.FromArgb(153, 34, 34);
+            previousButton.HoverEllipseColor = Color.FromArgb(32, 34, 37);
+            previousButton.Image = Properties.Resources.arrow_symbol_opposite;
+            previousButton.Location = new Point(3, 168);
+            previousButton.Name = "previousButton";
+            previousButton.NormalEllipseColor = Color.FromArgb(66, 76, 85);
+            previousButton.Size = new Size(54, 54);
+            previousButton.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            previousButton.TabIndex = 0;
+            previousButton.Click += previousButton_Click;
+            // 
+            // nextButton
+            // 
+            nextButton.Anchor = AnchorStyles.Right;
+            nextButton.BackgroundImage = Properties.Resources.arrow_symbol3;
+            nextButton.DownEllipseColor = Color.FromArgb(153, 34, 34);
+            nextButton.HoverEllipseColor = Color.FromArgb(32, 34, 37);
+            nextButton.Image = Properties.Resources.arrow_symbol3;
+            nextButton.Location = new Point(737, 168);
+            nextButton.Name = "nextButton";
+            nextButton.NormalEllipseColor = Color.FromArgb(66, 76, 85);
+            nextButton.Size = new Size(54, 54);
+            nextButton.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            nextButton.TabIndex = 1;
+            nextButton.Click += nextButton_Click;
+            // 
+            // mainPictureBox
+            // 
+            mainPictureBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            mainPictureBox.BackColor = Color.FromArgb(192, 196, 204);
+            mainPictureBox.BorderStyle = BorderStyle.Fixed3D;
+            mainPictureBox.Image = Properties.Resources.image_not_found_icon;
+            mainPictureBox.Location = new Point(62, 3);
+            mainPictureBox.Name = "mainPictureBox";
+            mainPictureBox.PixelOffsetType = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+            mainPictureBox.Size = new Size(668, 384);
+            mainPictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            mainPictureBox.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            mainPictureBox.TabIndex = 2;
+            mainPictureBox.TabStop = false;
+            mainPictureBox.TextRenderingType = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+            // 
+            // thumbnailPanel
+            // 
+            thumbnailPanel.Dock = DockStyle.Fill;
+            thumbnailPanel.Location = new Point(3, 399);
+            thumbnailPanel.Name = "thumbnailPanel";
+            thumbnailPanel.Size = new Size(794, 127);
+            thumbnailPanel.TabIndex = 1;
+            // 
+            // Display
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(800, 529);
+            Controls.Add(mainFormPanel);
+            KeyPreview = true;
+            Name = "Display";
+            Text = "Form1";
+            KeyDown += Display_KeyDown;
+            mainFormPanel.ResumeLayout(false);
+            tableLayoutPanel1.ResumeLayout(false);
+            tableLayoutPanel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)mainPictureBox).EndInit();
+            ResumeLayout(false);
         }
 
         #endregion
+
+        private Panel mainFormPanel;
+        private TableLayoutPanel tableLayoutPanel1;
+        private TableLayoutPanel tableLayoutPanel2;
+        private ReaLTaiizor.Controls.SocialButton previousButton;
+        private ReaLTaiizor.Controls.SocialButton nextButton;
+        private ReaLTaiizor.Controls.HopePictureBox mainPictureBox;
+        private Panel thumbnailPanel;
     }
 }

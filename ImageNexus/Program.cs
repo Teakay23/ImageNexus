@@ -2,16 +2,21 @@ namespace ImageNexus
 {
     internal static class Program
     {
-        /// <summary>
-        ///  The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new Display());
+
+            var browser = new ImageBrowser();
+            var imagePaths = browser.GetImages();
+
+            if (imagePaths == null || imagePaths.Count <= 0)
+                return;
+
+            var loader = new LazyImageLoader();
+            var viewer = new ImageViewer(imagePaths, loader);
+
+            Application.Run(new Display(imagePaths, viewer));
         }
     }
 }

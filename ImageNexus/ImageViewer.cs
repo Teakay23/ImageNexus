@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ImageNexus
 {
-    internal class ImageViewer : IImageViewer
+    public class ImageViewer : IImageViewer
     {
         private IImageLoader loader;
         private List<string> imagePaths;
@@ -21,25 +21,23 @@ namespace ImageNexus
             currentIndex = 0;
         }
 
-        public void NextImage()
+        public Image? NextImage()
         {
             if (currentIndex < imagePaths.Count - 1)
-            {
                 currentIndex++;
-                GetSelectedImage();
-            }
+
+            return GetSelectedImage();
         }
 
-        public void PreviousImage()
+        public Image? PreviousImage()
         {
             if (currentIndex > 0)
-            {
                 currentIndex--;
-                GetSelectedImage();
-            }
+            
+            return GetSelectedImage();
         }
 
-        public Image GetSelectedImage()
+        public Image? GetSelectedImage()
         {
             return loader.LoadImage(imagePaths[currentIndex]);
         }

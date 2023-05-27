@@ -21,7 +21,7 @@ namespace ImageNexus
             _imageLoader = imageLoader;
         }
 
-        public override Image LoadImage(string filePath)
+        public override Image? LoadImage(string filePath)
         {
             if (_images[filePath] == null)
                 _images[filePath] = ResizeImage(_imageLoader.LoadImage(filePath), 400, 225);
@@ -29,8 +29,11 @@ namespace ImageNexus
             return _images[filePath];
         }
 
-        private static Image ResizeImage(Image originalImage, int width, int height)
+        private static Image? ResizeImage(Image? originalImage, int width, int height)
         {
+            if (originalImage == null)
+                return null;
+
             using var resizedImage = new Bitmap(width, height);
             using var graphics = Graphics.FromImage(resizedImage);
 

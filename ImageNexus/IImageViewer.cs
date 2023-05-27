@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace ImageNexus
 {
-    internal interface IImageViewer
+    public interface IImageViewer
     {
-        void NextImage();
-        void PreviousImage();
-        Image GetSelectedImage();
+        Image? NextImage();
+        Image? PreviousImage();
+        Image? GetSelectedImage();
     }
 }

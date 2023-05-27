@@ -22,10 +22,17 @@ namespace ImageNexus
             imagePaths.ForEach(path => _images.Add(path, null));
         }
 
-        public virtual Image LoadImage(string filePath)
+        public virtual Image? LoadImage(string filePath)
         {
-            if (_images[filePath] == null)
-                _images[filePath] = Image.FromFile(filePath);
+            try
+            {
+                if (_images[filePath] == null)
+                    _images[filePath] = Image.FromFile(filePath);
+            }
+            catch(OutOfMemoryException)
+            {
+                return null;
+            }
 
             return _images[filePath];
         }
