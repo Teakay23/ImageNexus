@@ -1,4 +1,6 @@
 using ImageNexus.Properties;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace ImageNexus
 
@@ -34,12 +36,16 @@ namespace ImageNexus
             currentThumbnailCount = GetDisplayThumbnailCount();
             SetMainImage();
             SetThumbnailImages();
+            Focus();
         }
 
         private void SetThumbnailPictureBoxes()
         {
             foreach (PictureBox picBox in thumbnailPanel.Controls)
+            {
+                picBox.Paint -= HighlightedThumbnail_Paint;
                 thumbnailBoxPool.TakeIn();
+            }
 
             thumbnailPanel.Controls.Clear();
 
@@ -62,7 +68,20 @@ namespace ImageNexus
             {
                 var picBox = (PictureBox)thumbnailPanel.Controls[i];
                 picBox.Image = thumbnailImages[i] ?? Resources.image_not_found_icon;
+
+                if (i == 0)
+                    picBox.Paint += HighlightedThumbnail_Paint;
             }
+        }
+
+        private void HighlightedThumbnail_Paint(object? sender, PaintEventArgs e)
+        {
+            if (sender == null)
+                return;
+
+            Graphics g = e.Graphics;
+            var p = new Pen(Color.Blue, 3);
+            g.DrawRectangle(p, new Rectangle(1, 1, ((PictureBox)sender).Width - 7, ((PictureBox)sender).Height - 7));
         }
 
         private int GetDisplayThumbnailCount()
