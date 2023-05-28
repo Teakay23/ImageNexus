@@ -44,6 +44,7 @@ namespace ImageNexus
             foreach (PictureBox picBox in thumbnailPanel.Controls)
             {
                 picBox.Paint -= HighlightedThumbnail_Paint;
+                picBox.Click -= Thumbnail_Click;
                 thumbnailBoxPool.TakeIn();
             }
 
@@ -57,6 +58,7 @@ namespace ImageNexus
                 if (thumbnailPanel.Controls.Count == 0)
                     picBox.BorderStyle = BorderStyle.Fixed3D;
                 thumbnailPanel.Controls.Add(picBox);
+                picBox.Click += Thumbnail_Click;
             }
         }
 
@@ -82,6 +84,25 @@ namespace ImageNexus
             Graphics g = e.Graphics;
             var p = new Pen(Color.Blue, 3);
             g.DrawRectangle(p, new Rectangle(1, 1, ((PictureBox)sender).Width - 7, ((PictureBox)sender).Height - 7));
+        }
+
+        private void Thumbnail_Click(object? sender, EventArgs e)
+        {
+            int position = 0;
+
+            for (int i = 0; i < thumbnailPanel.Controls.Count; i++)
+            {
+                if ((PictureBox?)sender == thumbnailPanel.Controls[i])
+                {
+                    position = i;
+                    break;
+                }
+            }
+
+            SuspendLayout();
+            for (int i = 0; i < position; i++)
+                SetNextImage();
+            ResumeLayout();
         }
 
         private int GetDisplayThumbnailCount()
