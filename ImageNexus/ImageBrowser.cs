@@ -37,7 +37,6 @@ namespace ImageNexus
 
         public void SelectImage(string imagePath)
         {
-            // Perform the necessary operations when an image is selected
             Console.WriteLine("Selected image: " + imagePath);
         }
 
