@@ -11,5 +11,7 @@ namespace ImageNexus
         Image? NextImage();
         Image? PreviousImage();
         Image? GetSelectedImage();
+
+        public string GetSelectedImageName();
     }
 }

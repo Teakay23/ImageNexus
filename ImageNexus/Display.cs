@@ -82,6 +82,8 @@ namespace ImageNexus
                     mainPictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                 else
                     mainPictureBox.SizeMode = PictureBoxSizeMode.CenterImage;
+
+                imageNameLabel.Text = imageFetcher.GetSelectedImageName();
             }
         }
     }

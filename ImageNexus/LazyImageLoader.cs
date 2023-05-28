@@ -29,7 +29,7 @@ namespace ImageNexus
                 if (_images[filePath] == null)
                     _images[filePath] = Image.FromFile(filePath);
             }
-            catch(OutOfMemoryException)
+            catch
             {
                 return null;
             }

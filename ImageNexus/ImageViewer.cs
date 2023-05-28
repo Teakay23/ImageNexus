@@ -25,6 +25,8 @@ namespace ImageNexus
         {
             if (currentIndex < imagePaths.Count - 1)
                 currentIndex++;
+            else
+                currentIndex = 0;
 
             return GetSelectedImage();
         }
@@ -33,6 +35,8 @@ namespace ImageNexus
         {
             if (currentIndex > 0)
                 currentIndex--;
+            else
+                currentIndex = imagePaths.Count - 1;
             
             return GetSelectedImage();
         }
@@ -40,6 +44,11 @@ namespace ImageNexus
         public Image? GetSelectedImage()
         {
             return loader.LoadImage(imagePaths[currentIndex]);
+        }
+
+        public string GetSelectedImageName()
+        {
+            return Path.GetFileName(imagePaths[currentIndex]);
         }
     }
 }
