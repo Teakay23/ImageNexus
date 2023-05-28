@@ -33,7 +33,7 @@
             tableLayoutPanel2 = new TableLayoutPanel();
             previousButton = new ReaLTaiizor.Controls.SocialButton();
             nextButton = new ReaLTaiizor.Controls.SocialButton();
-            mainPictureBox = new ReaLTaiizor.Controls.HopePictureBox();
+            mainPictureBox = new Emgu.CV.UI.PanAndZoomPictureBox();
             imageNameLabel = new ReaLTaiizor.Controls.DungeonLabel();
             thumbnailPanel = new FlowLayoutPanel();
             mainFormPanel.SuspendLayout();
@@ -121,18 +121,16 @@
             // mainPictureBox
             // 
             mainPictureBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            mainPictureBox.BackColor = Color.FromArgb(192, 196, 204);
+            mainPictureBox.BackColor = Color.Black;
             mainPictureBox.BorderStyle = BorderStyle.Fixed3D;
             mainPictureBox.Image = Properties.Resources.image_not_found_icon;
             mainPictureBox.Location = new Point(62, 3);
             mainPictureBox.Name = "mainPictureBox";
-            mainPictureBox.PixelOffsetType = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
             mainPictureBox.Size = new Size(668, 395);
             mainPictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-            mainPictureBox.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             mainPictureBox.TabIndex = 2;
             mainPictureBox.TabStop = false;
-            mainPictureBox.TextRenderingType = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+            mainPictureBox.OnZoomScaleChange += mainPictureBox_OnZoomScaleChange;
             // 
             // imageNameLabel
             // 
@@ -184,7 +182,7 @@
         private ReaLTaiizor.Controls.DungeonLabel imageNameLabel;
         private ReaLTaiizor.Controls.SocialButton previousButton;
         private ReaLTaiizor.Controls.SocialButton nextButton;
-        private ReaLTaiizor.Controls.HopePictureBox mainPictureBox;
+        private Emgu.CV.UI.PanAndZoomPictureBox mainPictureBox;
         private FlowLayoutPanel thumbnailPanel;
     }
 }

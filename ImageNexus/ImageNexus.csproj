@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Emgu.CV.UI" Version="4.7.0.5276" />
     <PackageReference Include="ReaLTaiizor" Version="3.7.9.2" />
   </ItemGroup>
 

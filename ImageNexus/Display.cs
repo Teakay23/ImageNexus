@@ -1,3 +1,4 @@
+using Emgu.CV.UI;
 using ImageNexus.Properties;
 using System.Drawing;
 using System.Windows.Forms;
@@ -34,6 +35,7 @@ namespace ImageNexus
             thumbnailFetcher = thumbnailViewer;
             thumbnailBoxPool = new ThumbnailBoxPool(thumbnailPoolSize);
             currentThumbnailCount = GetDisplayThumbnailCount();
+            PanAndZoomPictureBox.ZoomLevels = new double[] { 0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0 };
             SetMainImage();
             SetThumbnailImages();
             Focus();
@@ -178,6 +180,19 @@ namespace ImageNexus
             currentThumbnailCount = GetDisplayThumbnailCount();
         }
 
+        private void mainPictureBox_OnZoomScaleChange(object sender, EventArgs e)
+        {
+            var picBox = (PanAndZoomPictureBox)sender;
+
+            if (picBox.ZoomScale > 2.0)
+                picBox.SetZoomScale(2.0, new Point(0, 0));
+
+            if (picBox.ZoomScale < 0.5)
+                picBox.SetZoomScale(0.5, new Point(0, 0));
+
+            AutoSetMainImageSizeMode();
+        }
+
         public Image? MainImage
         {
             get
@@ -187,14 +202,25 @@ namespace ImageNexus
             set
             {
                 mainPictureBox.Image = value ?? Resources.image_not_found_icon;
+                mainPictureBox.SetZoomScale(1.0, new Point(0, 0));
 
-                if (mainPictureBox.Image.Size.Height > mainPictureBox.Size.Height || mainPictureBox.Image.Size.Width > mainPictureBox.Size.Width)
-                    mainPictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-                else
-                    mainPictureBox.SizeMode = PictureBoxSizeMode.CenterImage;
+                AutoSetMainImageSizeMode();
 
                 imageNameLabel.Text = imageFetcher.GetSelectedImageName();
             }
+        }
+
+        private void AutoSetMainImageSizeMode()
+        {
+            if (IsImageSmallerThanPictureBox())
+                mainPictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            else
+                mainPictureBox.SizeMode = PictureBoxSizeMode.CenterImage;
+        }
+
+        private bool IsImageSmallerThanPictureBox()
+        {
+            return mainPictureBox.Image.Size.Height > mainPictureBox.Size.Height || mainPictureBox.Image.Size.Width > mainPictureBox.Size.Width;
         }
     }
 }
