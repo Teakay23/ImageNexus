@@ -35,7 +35,7 @@
             nextButton = new ReaLTaiizor.Controls.SocialButton();
             mainPictureBox = new ReaLTaiizor.Controls.HopePictureBox();
             imageNameLabel = new ReaLTaiizor.Controls.DungeonLabel();
-            thumbnailPanel = new TableLayoutPanel();
+            thumbnailPanel = new FlowLayoutPanel();
             mainFormPanel.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
@@ -64,9 +64,9 @@
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 3;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 75F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 130F));
             tableLayoutPanel1.Size = new Size(800, 557);
             tableLayoutPanel1.TabIndex = 0;
             // 
@@ -85,7 +85,7 @@
             tableLayoutPanel2.RowCount = 1;
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel2.Size = new Size(794, 396);
+            tableLayoutPanel2.Size = new Size(794, 401);
             tableLayoutPanel2.TabIndex = 0;
             // 
             // previousButton
@@ -95,7 +95,7 @@
             previousButton.DownEllipseColor = Color.FromArgb(153, 34, 34);
             previousButton.HoverEllipseColor = Color.FromArgb(32, 34, 37);
             previousButton.Image = Properties.Resources.arrow_symbol_opposite;
-            previousButton.Location = new Point(3, 171);
+            previousButton.Location = new Point(3, 173);
             previousButton.Name = "previousButton";
             previousButton.NormalEllipseColor = Color.FromArgb(66, 76, 85);
             previousButton.Size = new Size(54, 54);
@@ -110,7 +110,7 @@
             nextButton.DownEllipseColor = Color.FromArgb(153, 34, 34);
             nextButton.HoverEllipseColor = Color.FromArgb(32, 34, 37);
             nextButton.Image = Properties.Resources.arrow_symbol3;
-            nextButton.Location = new Point(737, 171);
+            nextButton.Location = new Point(737, 173);
             nextButton.Name = "nextButton";
             nextButton.NormalEllipseColor = Color.FromArgb(66, 76, 85);
             nextButton.Size = new Size(54, 54);
@@ -127,7 +127,7 @@
             mainPictureBox.Location = new Point(62, 3);
             mainPictureBox.Name = "mainPictureBox";
             mainPictureBox.PixelOffsetType = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
-            mainPictureBox.Size = new Size(668, 390);
+            mainPictureBox.Size = new Size(668, 395);
             mainPictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             mainPictureBox.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             mainPictureBox.TabIndex = 2;
@@ -141,7 +141,7 @@
             imageNameLabel.BackColor = Color.Transparent;
             imageNameLabel.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             imageNameLabel.ForeColor = Color.FromArgb(76, 76, 77);
-            imageNameLabel.Location = new Point(351, 403);
+            imageNameLabel.Location = new Point(351, 408);
             imageNameLabel.Name = "imageNameLabel";
             imageNameLabel.Size = new Size(98, 17);
             imageNameLabel.TabIndex = 2;
@@ -149,14 +149,11 @@
             // 
             // thumbnailPanel
             // 
-            thumbnailPanel.ColumnCount = 1;
-            thumbnailPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             thumbnailPanel.Dock = DockStyle.Fill;
-            thumbnailPanel.Location = new Point(3, 425);
+            thumbnailPanel.Location = new Point(3, 430);
             thumbnailPanel.Name = "thumbnailPanel";
-            thumbnailPanel.RowCount = 1;
-            thumbnailPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            thumbnailPanel.Size = new Size(794, 129);
+            thumbnailPanel.Padding = new Padding(5, 0, 0, 0);
+            thumbnailPanel.Size = new Size(794, 124);
             thumbnailPanel.TabIndex = 3;
             // 
             // Display
@@ -166,6 +163,7 @@
             ClientSize = new Size(800, 557);
             Controls.Add(mainFormPanel);
             KeyPreview = true;
+            MinimumSize = new Size(816, 596);
             Name = "Display";
             Text = "Form1";
             KeyDown += Display_KeyDown;
@@ -186,6 +184,6 @@
         private ReaLTaiizor.Controls.SocialButton previousButton;
         private ReaLTaiizor.Controls.SocialButton nextButton;
         private ReaLTaiizor.Controls.HopePictureBox mainPictureBox;
-        private TableLayoutPanel thumbnailPanel;
+        private FlowLayoutPanel thumbnailPanel;
     }
 }

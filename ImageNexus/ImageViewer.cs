@@ -46,9 +46,27 @@ namespace ImageNexus
             return loader.LoadImage(imagePaths[currentIndex]);
         }
 
+        public List<Image?> GetBulkImages(int imageCount)
+        {
+            var images = new List<Image?>();
+
+            for(int i = 0; i < imageCount; i++)
+            {
+                var newImageIndex = currentIndex + i < imagePaths.Count ? currentIndex + i : (currentIndex + i) % imagePaths.Count;
+                images.Add(loader.LoadImage(imagePaths[newImageIndex]));
+            }
+
+            return images;
+        }
+
         public string GetSelectedImageName()
         {
             return Path.GetFileName(imagePaths[currentIndex]);
+        }
+
+        public int GetImageCount()
+        {
+            return imagePaths.Count;
         }
     }
 }

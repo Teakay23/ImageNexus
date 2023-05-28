@@ -11,21 +11,33 @@ namespace ImageNexus
         private List<PictureBox> _pool;
         private int _poolSize = 10;
         private int currentIndex = 0;
+        private Size _thumbnailBoxSize = new(150, 110);
 
-        public int PoolSize
-        {
+        public int PoolSize 
+        { 
             get { return _poolSize; }
-            set
-            {
-                if (value <= 0)
-                    _poolSize = 1;
-                _poolSize = value;
-            }
         }
 
-        public ThumbnailBoxPool() 
+        public Size ThumbnailBoxSize
         {
+            get { return _thumbnailBoxSize; }
+        }
+
+        public ThumbnailBoxPool(int poolSize) 
+        {
+            _poolSize = poolSize;
             _pool = new List<PictureBox>();
+
+            for(int i = 0; i < _poolSize; i++)
+            {
+                _pool.Add(new PictureBox()
+                {
+                    Size = _thumbnailBoxSize,
+                    Anchor = AnchorStyles.Left,
+                    SizeMode = PictureBoxSizeMode.CenterImage,
+                    BorderStyle = BorderStyle.FixedSingle
+                });
+            }
         }
 
         public PictureBox? TakeOut()
@@ -33,18 +45,7 @@ namespace ImageNexus
             if (currentIndex >= _poolSize)
                 return null;
 
-            PictureBox picBox;
-
-            try
-            {
-                picBox = _pool[currentIndex];
-            }
-            catch(IndexOutOfRangeException)
-            {
-                _pool.Add(new PictureBox());
-                picBox = _pool[currentIndex];
-            }
-
+            var picBox = _pool[currentIndex];
             currentIndex++;
             return picBox;
         }

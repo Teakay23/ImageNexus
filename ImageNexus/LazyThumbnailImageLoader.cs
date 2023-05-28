@@ -21,28 +21,24 @@ namespace ImageNexus
             _imageLoader = imageLoader;
         }
 
+        private bool ThumbnailCallback()
+        {
+            return false;
+        }
+
         public override Image? LoadImage(string filePath)
         {
             if (_images[filePath] == null)
-                _images[filePath] = ResizeImage(_imageLoader.LoadImage(filePath), 400, 225);
+            {
+                var fullImage = _imageLoader.LoadImage(filePath);
+                if (fullImage == null)
+                    return null;
+
+                var callback = new Image.GetThumbnailImageAbort(ThumbnailCallback);
+                _images[filePath] = fullImage.GetThumbnailImage(fullImage.Width * 110 / fullImage.Height, 110, callback, IntPtr.Zero);
+            }
 
             return _images[filePath];
-        }
-
-        private static Image? ResizeImage(Image? originalImage, int width, int height)
-        {
-            if (originalImage == null)
-                return null;
-
-            using var resizedImage = new Bitmap(width, height);
-            using var graphics = Graphics.FromImage(resizedImage);
-
-            graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
-            graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
-            graphics.DrawImage(originalImage, new Rectangle(0, 0, width, height));
-
-            return resizedImage;
         }
     }
 }

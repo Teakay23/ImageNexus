@@ -1,16 +1,48 @@
 using ImageNexus.Properties;
 
 namespace ImageNexus
+
 {
     public partial class Display : Form
     {
-        IImageViewer imageFetcher;
+        private IImageViewer imageFetcher;
+        private IImageViewer thumbnailFetcher;
+        private ThumbnailBoxPool thumbnailBoxPool;
 
-        public Display(List<string> imageFilePaths, IImageViewer viewer)
+        public Display(List<string> imageFilePaths, IImageViewer viewer, IImageViewer thumbnailViewer, int thumbnailPoolSize)
         {
             InitializeComponent();
             imageFetcher = viewer;
+            thumbnailFetcher = thumbnailViewer;
+            thumbnailBoxPool = new ThumbnailBoxPool(thumbnailPoolSize);
             SetMainImage();
+            SetThumbnailImages();
+        }
+
+        private void SetThumbnailImages()
+        {
+            var thumbnailCount = GetDisplayThumbnailCount();
+            thumbnailCount = thumbnailCount <= thumbnailBoxPool.PoolSize ? thumbnailCount : thumbnailBoxPool.PoolSize;
+            //thumbnailCount = thumbnailCount <= thumbnailFetcher.GetImageCount() ? thumbnailCount : thumbnailFetcher.GetImageCount();
+
+            var thumbnailImages = thumbnailFetcher.GetBulkImages(thumbnailCount);
+
+            for (int i = 0; i < thumbnailCount; i++)
+            {
+                var picBox = thumbnailBoxPool.TakeOut();
+                picBox.Image = thumbnailImages[i] ?? Resources.image_not_found_icon;
+
+                thumbnailPanel.Controls.Add(picBox);
+            }
+        }
+
+        private int GetDisplayThumbnailCount()
+        {
+            var widthPanel = thumbnailPanel.Size.Width;
+            var widthThumbnail = thumbnailBoxPool.ThumbnailBoxSize.Width;
+            var thumbnailPanelPadding = thumbnailPanel.Padding.Left + thumbnailPanel.Padding.Right;
+
+            return widthPanel / (widthThumbnail + thumbnailPanelPadding);
         }
 
         private void SetMainImage()

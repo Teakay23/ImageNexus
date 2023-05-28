@@ -11,7 +11,8 @@ namespace ImageNexus
         Image? NextImage();
         Image? PreviousImage();
         Image? GetSelectedImage();
-
+        List<Image?> GetBulkImages(int imageCount);
         public string GetSelectedImageName();
+        public int GetImageCount();
     }
 }

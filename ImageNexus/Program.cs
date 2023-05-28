@@ -14,9 +14,11 @@ namespace ImageNexus
                 return;
 
             var loader = new LazyImageLoader();
+            var thumbnailLoader = new LazyThumbnailImageLoader(loader);
             var viewer = new ImageViewer(imagePaths, loader);
+            var thumbnailViewer = new ImageViewer(imagePaths, thumbnailLoader);
 
-            Application.Run(new Display(imagePaths, viewer));
+            Application.Run(new Display(imagePaths, viewer, thumbnailViewer, 10));
         }
     }
 }
