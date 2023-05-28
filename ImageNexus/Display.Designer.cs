@@ -165,8 +165,9 @@
             KeyPreview = true;
             MinimumSize = new Size(816, 596);
             Name = "Display";
-            Text = "Form1";
+            Text = "ImageNexus";
             KeyDown += Display_KeyDown;
+            Resize += Display_Resize;
             mainFormPanel.ResumeLayout(false);
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();

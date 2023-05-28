@@ -53,6 +53,7 @@ namespace ImageNexus
         public void TakeIn()
         {
             _pool[currentIndex].Image = null;
+            _pool[currentIndex].BorderStyle = BorderStyle.None;
             currentIndex--;
         }
     }

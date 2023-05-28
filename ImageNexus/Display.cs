@@ -8,6 +8,22 @@ namespace ImageNexus
         private IImageViewer imageFetcher;
         private IImageViewer thumbnailFetcher;
         private ThumbnailBoxPool thumbnailBoxPool;
+        private int _currentThumbnailCount = -1;
+
+        private int currentThumbnailCount
+        {
+            get { return _currentThumbnailCount; }
+
+            set
+            {
+                if (value != _currentThumbnailCount)
+                {
+                    _currentThumbnailCount = value <= thumbnailBoxPool.PoolSize ? value : thumbnailBoxPool.PoolSize;
+                    SetThumbnailPictureBoxes();
+                    SetThumbnailImages();
+                }
+            }
+        }
 
         public Display(List<string> imageFilePaths, IImageViewer viewer, IImageViewer thumbnailViewer, int thumbnailPoolSize)
         {
@@ -15,24 +31,37 @@ namespace ImageNexus
             imageFetcher = viewer;
             thumbnailFetcher = thumbnailViewer;
             thumbnailBoxPool = new ThumbnailBoxPool(thumbnailPoolSize);
+            currentThumbnailCount = GetDisplayThumbnailCount();
             SetMainImage();
             SetThumbnailImages();
         }
 
-        private void SetThumbnailImages()
+        private void SetThumbnailPictureBoxes()
         {
-            var thumbnailCount = GetDisplayThumbnailCount();
-            thumbnailCount = thumbnailCount <= thumbnailBoxPool.PoolSize ? thumbnailCount : thumbnailBoxPool.PoolSize;
-            //thumbnailCount = thumbnailCount <= thumbnailFetcher.GetImageCount() ? thumbnailCount : thumbnailFetcher.GetImageCount();
+            foreach (PictureBox picBox in thumbnailPanel.Controls)
+                thumbnailBoxPool.TakeIn();
 
-            var thumbnailImages = thumbnailFetcher.GetBulkImages(thumbnailCount);
+            thumbnailPanel.Controls.Clear();
 
-            for (int i = 0; i < thumbnailCount; i++)
+            for (int i = 0; i < currentThumbnailCount; i++)
             {
                 var picBox = thumbnailBoxPool.TakeOut();
-                picBox.Image = thumbnailImages[i] ?? Resources.image_not_found_icon;
-
+                if (picBox == null)
+                    return;
+                if (thumbnailPanel.Controls.Count == 0)
+                    picBox.BorderStyle = BorderStyle.Fixed3D;
                 thumbnailPanel.Controls.Add(picBox);
+            }
+        }
+
+        private void SetThumbnailImages()
+        {
+            var thumbnailImages = thumbnailFetcher.GetBulkImages(thumbnailPanel.Controls.Count);
+
+            for (int i = 0; i < thumbnailPanel.Controls.Count; i++)
+            {
+                var picBox = (PictureBox)thumbnailPanel.Controls[i];
+                picBox.Image = thumbnailImages[i] ?? Resources.image_not_found_icon;
             }
         }
 
@@ -53,11 +82,15 @@ namespace ImageNexus
         private void SetNextImage()
         {
             MainImage = imageFetcher.NextImage();
+            thumbnailFetcher.NextImage();
+            SetThumbnailImages();
         }
 
         private void SetPreviousImage()
         {
             MainImage = imageFetcher.PreviousImage();
+            thumbnailFetcher.PreviousImage();
+            SetThumbnailImages();
         }
 
         private void nextButton_Click(object sender, EventArgs e)
@@ -98,6 +131,11 @@ namespace ImageNexus
             }
 
             return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        private void Display_Resize(object sender, EventArgs e)
+        {
+            currentThumbnailCount = GetDisplayThumbnailCount();
         }
 
         public Image? MainImage
